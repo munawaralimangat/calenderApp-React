@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa"; // Import icons for create, edit, and delete buttons
 import AddEventModal from "./AddEventModal";
 
 const EventsField = ({ date }) => {
 
-  const [events,setEvents] = useState([]);
-  const [isModalOpen,setIsModalOpen] = useState(false)
+  const [events, setEvents] = useState(() => {
+    const storedEvents = localStorage.getItem("events");
+    return storedEvents ? JSON.parse(storedEvents) : [];
+  });
+  const [isModalOpen,setIsModalOpen] = useState(false);
+
+  useEffect(()=>{
+    const storedEvents = JSON.parse(localStorage.getItem('events'));
+    if(storedEvents){
+      setEvents(storedEvents)
+    }
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('events',JSON.stringify(events))
+  },[events])
 
   const handleCreateEvent = (newEvent)=>{
     const id = events.length+1;
@@ -17,7 +31,6 @@ const EventsField = ({ date }) => {
     setEvents([...events,newEventWithDate])
     setIsModalOpen(false)
   }
-
   // Filter events for the selected date
   const eventsForDate = events.filter((event) => event.date === date.toDate().toDateString());
 
@@ -53,11 +66,11 @@ const EventsField = ({ date }) => {
           ))}
         </ul>  
       )}
+
       <AddEventModal 
       isOpen={isModalOpen}
       onClose={()=>setIsModalOpen(false)}
       onCreateEvent={handleCreateEvent}
-
       />
     </div>
   );

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
 
@@ -8,6 +7,7 @@ const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
         description:""
     })
 
+    //on change for each charector to be stored in the state variable
     const handleInputChange = (e)=>{
         const {name,value}=e.target;
         setNewEvent({
@@ -15,6 +15,7 @@ const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
             [name]:value
         })
     }
+    
     const handleCreateEvent = ()=>{
         if(newEvent.title.trim() !==""){
             onCreateEvent(newEvent)
@@ -24,7 +25,7 @@ const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
             })
         }
     }
-    if(!isOpen) return null
+    if(!isOpen) return null  // <====ths manags to open and close the modal  
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white rounded-lg p-8">
