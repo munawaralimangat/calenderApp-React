@@ -9,19 +9,20 @@ const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
 
     //on change for each charector to be stored in the state variable
     const handleInputChange = (e)=>{
+        console.log(e.target)
         const {name,value}=e.target;
         setNewEvent({
             ...newEvent,
             [name]:value
         })
     }
-    
+
     const handleCreateEvent = ()=>{
         if(newEvent.title.trim() !==""){
             onCreateEvent(newEvent)
             setNewEvent({
                 title:"",
-                description:""
+                description:"",
             })
         }
     }
