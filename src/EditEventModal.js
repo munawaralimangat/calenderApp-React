@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-const EditEventModal = ({isOpen,onClose,eventData})=>{
+const EditEventModal = ({isOpen,onClose,eventData,onSave})=>{
     console.log(eventData)
     const [title,setTitle] = useState('')
     const [description,setDescription] = useState('')
@@ -9,12 +9,21 @@ const EditEventModal = ({isOpen,onClose,eventData})=>{
             setTitle(eventData.title)
             setDescription(eventData.description)
         }
-    },[eventData])
+    },[eventData]);
+
+    const handleSave = ()=>{
+        onSave({
+            ...eventData,
+            title:title,
+            description:description
+        })
+        onClose()
+    }
     
     if(!isOpen) return null
     return(
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-900 bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white rounded-lg p-6">
         <h2 className="text-lg font-semibold mb-4">Edit Event</h2>
         
           <div className="mb-4">
@@ -43,8 +52,8 @@ const EditEventModal = ({isOpen,onClose,eventData})=>{
             ></textarea>
           </div>
           <button
-            onClick={onClose}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md">
+            onClick={handleSave}
+            className="bg-blue-800 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
             Save
           </button>
           <button onClick={onClose} className="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-md">

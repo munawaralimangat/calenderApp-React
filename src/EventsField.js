@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa"; // Import icons for create, edit, and delete buttons
+import { v4 as uuidv4 } from 'uuid';
 import AddEventModal from "./AddEventModal";
 import EditEventModal from "./EditEventModal";
 
@@ -26,7 +27,7 @@ const EventsField = ({ date }) => {
 
   //handling creation of event
   const handleCreateEvent = (newEvent)=>{
-    const id = events.length+1;
+    const id = uuidv4();
     const newEventWithDate = {
       ...newEvent,
       id,
@@ -37,12 +38,24 @@ const EventsField = ({ date }) => {
   }
 
   //handling updation of event
-  const handleUpdateEvent = (event)=>{
-    console.log(event)
-    setEditEvent(event)
-    setIsEditModalOpen(true)
-    console.log(editEvent,"editedvb")
+  const handleUpdateEvent = (updatedEvent)=>{
+    console.log("this works",updatedEvent)
+    const updatedEvents = events.map((event)=>{
+      if(event.id===updatedEvent.id){
+        return updatedEvent
+      }
+      return event
+    })
+    setEvents(updatedEvents);
   }
+
+  //delete event functonality
+  const handleDelete = (eventForDelete)=>{
+    console.log('delete',eventForDelete)
+    const updatedEvents = events.filter((event)=> event.id !==eventForDelete.id)
+    setEvents(updatedEvents)
+  }
+
   // Filter events for the selected date
   const eventsForDate = events.filter((event) => event.date === date.toDate().toDateString());
 
@@ -70,13 +83,20 @@ const EventsField = ({ date }) => {
               <div className="flex space-x-2">
 
                 <button onClick={
-                  ()=>handleUpdateEvent(event)
+                  ()=>{
+                    setEditEvent(event)
+                    setIsEditModalOpen(true)
+                  }
 
                   } className="text-gray-500 hover:text-gray-700">
                   <FaEdit />
                 </button>
 
-                <button className="text-red-500 hover:text-red-700">
+                <button 
+                onClick={()=>{
+                  handleDelete(event)
+                }}
+                className="text-red-500 hover:text-red-700">
                   <FaTrash />
                 </button>
 
@@ -97,8 +117,9 @@ const EventsField = ({ date }) => {
       isOpen={isEditModalOpen}
       onClose={()=>setIsEditModalOpen(false)}
       eventData={editEvent}
-      
+      onSave={handleUpdateEvent}
       />
+
     </div>
   );
 };

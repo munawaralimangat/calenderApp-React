@@ -29,8 +29,11 @@ const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
     if(!isOpen) return null  // <====ths manags to open and close the modal  
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-lg p-8">
+            <div className="bg-white rounded-lg p-6">
             <h2 className="text-lg font-semibold mb-4">Add Event</h2>
+            <label htmlFor="title" className="block text-gray-700 font-semibold mb-1">
+              Title
+            </label>
             <input
             type="text"
             name="title"
@@ -39,6 +42,9 @@ const AddEventModal = ({isOpen,onClose,onCreateEvent})=>{
             placeholder="Event Title"
             className="block w-full rounded-md border-gray-300 mb-4 p-2"
             />
+            <label htmlFor="title" className="block text-gray-700 font-semibold mb-1">
+              Title
+            </label>
             <textarea
             name="description"
             value={newEvent.description}

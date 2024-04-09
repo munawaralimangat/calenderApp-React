@@ -6,6 +6,7 @@ import "./App.css";
 import cn from "./util/cn";
 import dayjs from "dayjs";
 import EventsField from "./EventsField";
+import Header from "./Header";
 
 function App() {
   const days = ["S", "M", "T", "W", "T", "F", "S"];
@@ -18,8 +19,10 @@ function App() {
   };
 
   return (
-    <div className="flex w-1/2 mx-auto divide-x-2 gap-10 h-screen items-center">
-      <div className="w-96 h-96">
+  <div>
+    <Header/>
+    <div className="flex mt-20 flex-wrap justify-center w-full max-w-screen-lg mx-auto gap-10 h-screen items-start p-5 border">
+      <div className="w-96 h-96 ">
         <div className="flex justify-between m-2">
           <div>
             <h1 className="font-semibold">
@@ -92,13 +95,14 @@ function App() {
           )}
         </div>
       </div>
-      <div className="h-96 px-5">
+      <div className="h-96 px-5 mt-10">
         <h1 className="font-semibold">
           Schedule for {selectDate.toDate().toDateString()}
         </h1>
         <EventsField date={selectDate} />
       </div>
     </div>
+  </div>
   );
 }
 
