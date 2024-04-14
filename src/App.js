@@ -70,8 +70,8 @@ function App() {
               return (
                 <div className="h-14 border-t grid place-content-center">
                   <h1
-                    key={index}
-                    className={cn(
+                      key={index}
+                      className={cn(
                       currentMonth ? "" : "text-gray-400 text-sm",
                       today
                         ? "bg-red-500 text-white rounded-full font-semibold hover:bg-black"

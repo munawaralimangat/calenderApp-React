@@ -10,6 +10,7 @@ const EventsField = ({ date }) => {
     const storedEvents = localStorage.getItem("events");
     return storedEvents ? JSON.parse(storedEvents) : [];
   });
+  
   const [isModalOpen,setIsModalOpen] = useState(false);
   const [isEditModalOpen,setIsEditModalOpen] = useState(false)
   const [editEvent,setEditEvent] = useState('')
