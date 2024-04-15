@@ -17,6 +17,7 @@ const EventsField = ({ date }) => {
 
   useEffect(()=>{
     const storedEvents = JSON.parse(localStorage.getItem('events'));
+    console.log('22222',storedEvents)
     if(storedEvents){
       setEvents(storedEvents)
     }

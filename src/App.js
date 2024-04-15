@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { generateDate, months } from "./util/Calender";
 import { GrNext, GrPrevious } from "react-icons/gr";
 
@@ -13,10 +13,23 @@ function App() {
   const currentDate = dayjs();
   const [today, setTody] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
+  const [markedDates,setMarkedDates] = useState([])
+  console.log(markedDates,'markedDates')
+
+  useEffect(()=>{
+    const storedEvents = JSON.parse(localStorage.getItem('events'));
+    if(storedEvents){
+      const events = storedEvents;
+      const dates = events.map(event=>event.date)
+      setMarkedDates(dates)
+    }
+  },[markedDates])
 
   const handleClick = (date) => {
     setSelectDate(date);
   };
+
+
 
   return (
   <div>
@@ -67,6 +80,8 @@ function App() {
         <div className="w-full grid grid-cols-7">
           {generateDate(today.month(), today.year()).map(
             ({ date, currentMonth, today }, index) => {
+              const isMarked = markedDates.includes(date.toDate().toDateString())
+              console.log(isMarked)
               return (
                 <div className="h-14 border-t grid place-content-center">
                   <h1
@@ -74,12 +89,13 @@ function App() {
                       className={cn(
                       currentMonth ? "" : "text-gray-400 text-sm",
                       today
-                        ? "bg-red-500 text-white rounded-full font-semibold hover:bg-black"
+                        ? "bg-red-500 text-white rounded-full font-extrabold hover:bg-black"
                         : "",
                       selectDate.toDate().toDateString() ===
                         date.toDate().toDateString()
                         ? "bg-black text-white"
                         : "",
+                        isMarked ? "text-blue-600 font-extrabold" : "",
                       "h-10 w-10 grid place-content-center hover:bg-black hover:text-white rounded-full transition-all cursor-pointer"
                     )}
                     onClick={() => {
